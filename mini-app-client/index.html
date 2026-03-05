@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLDRS SHOP</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <header class="top-bar">
+        <div class="top-bar-left">
+            <div class="burger-container">
+                <button class="burger-btn" id="burgerBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <div class="side-menu" id="sideMenu">
+                    <div class="side-menu-header">
+                        <h3>КАТАЛОГ</h3>
+                    </div>
+                    <div class="side-menu-content">
+                        <div class="categories-list" id="categoriesList">
+                            <div class="loading">ЗАГРУЗКА...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="shop-logo" id="shopLogo">
+                <span class="logo-text">OLDRS</span>
+                <span class="logo-sub">SHOP</span>
+            </div>
+        </div>
+
+        <div class="top-bar-right">
+            <button class="cart-btn" id="cartBtn">
+                <span class="cart-icon">📦</span>
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+            <div class="user-profile" id="userProfile"></div>
+        </div>
+    </header>
+
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>КОРЗИНА</h3>
+            <button class="close-cart-btn" id="closeCartBtn">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-total">
+            <span>ИТОГО:</span>
+            <span class="total-price" id="cartTotal">0 ₽</span>
+        </div>
+        <button class="checkout-btn" id="checkoutBtn">ОФОРМИТЬ ЗАКАЗ</button>
+    </div>
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <!-- МОДАЛКА АВТОРИЗАЦИИ - НОВАЯ ВЕРСИЯ -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-modal-content">
+            <div class="auth-header">
+                <h2 id="authTitle">🔐 ВХОД В АККАУНТ</h2>
+                <button class="close-auth-btn" id="closeAuthBtn">✕</button>
+            </div>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="loginTab">ВХОД</button>
+                <button class="auth-tab" id="registerTab">РЕГИСТРАЦИЯ</button>
+            </div>
+
+            <!-- ФОРМА ВХОДА - МУЛЬТИ-ВХОД -->
+            <div class="auth-form active" id="loginForm">
+                <div class="form-header">
+                    <span class="form-icon">⚔️</span>
+                    <span>ВОЙТИ В АККАУНТ</span>
+                </div>
+                
+                <div class="input-group">
+                    <label>ИГРОВОЙ ID / EMAIL / ЛОГИН</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔑</span>
+                        <input type="text" id="loginCredential" placeholder="ID, EMAIL ИЛИ ЛОГИН">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>ПАРОЛЬ</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="loginPassword" placeholder="••••••••">
+                    </div>
+                </div>
+                
+                <button class="auth-submit" id="loginSubmit">
+                    <span>ВОЙТИ</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </div>
+
+            <!-- ФОРМА РЕГИСТРАЦИИ - РАСШИРЕННАЯ -->
+            <div class="auth-form" id="registerForm">
+                <div class="form-header">
+                    <span class="form-icon">🛡️</span>
+                    <span>СОЗДАТЬ НОВЫЙ АККАУНТ</span>
+                </div>
+                
+                <div class="input-group">
+                    <label>ИГРОВОЙ НИКНЕЙМ</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🎮</span>
+                        <input type="text" id="registerGameNickname" placeholder="ВАШ НИК В ИГРЕ">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>ИГРОВОЙ ID</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🆔</span>
+                        <input type="text" id="registerGameId" placeholder="УНИКАЛЬНЫЙ ID ПЕРСОНАЖА">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>EMAIL</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">📧</span>
+                        <input type="email" id="registerEmail" placeholder="example@mail.com">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>ЛОГИН</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">👤</span>
+                        <input type="text" id="registerLogin" placeholder="ЛОГИН ДЛЯ ВХОДА">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>ПАРОЛЬ</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="registerPassword" placeholder="МИНИМУМ 6 СИМВОЛОВ">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>ПОВТОРИТЕ ПАРОЛЬ</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">✓</span>
+                        <input type="password" id="registerPassword2" placeholder="ВВЕДИТЕ ПАРОЛЬ ЕЩЕ РАЗ">
+                    </div>
+                </div>
+                
+                <button class="auth-submit" id="registerSubmit">
+                    <span>СОЗДАТЬ АККАУНТ</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЛИЧНЫЙ КАБИНЕТ - С СТАТУСАМИ ЗАКАЗОВ -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-modal-content">
+            <div class="profile-header">
+                <h2>ЛИЧНЫЙ КАБИНЕТ</h2>
+                <button class="close-profile-btn" id="closeProfileBtn">✕</button>
+            </div>
+            
+            <div class="profile-avatar" id="profileAvatar">
+                <div class="avatar-placeholder">👤</div>
+            </div>
+            
+            <div class="profile-info" id="profileInfo"></div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-label">БАЛАНС</span>
+                    <span class="stat-value" id="profileBalance">0 ₽</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">ЗАКАЗОВ</span>
+                    <span class="stat-value" id="profileOrders">0</span>
+                </div>
+            </div>
+            
+            <div class="balance-actions">
+                <button class="action-btn" id="depositBtn">
+                    <span>ПОПОЛНИТЬ</span>
+                    <span class="btn-icon">+</span>
+                </button>
+                <button class="action-btn" id="withdrawBtn">
+                    <span>ВЫВЕСТИ</span>
+                    <span class="btn-icon">-</span>
+                </button>
+            </div>
+            
+            <div class="profile-orders">
+                <h3>ИСТОРИЯ ЗАКАЗОВ</h3>
+                <div class="orders-list" id="userOrdersList"></div>
+            </div>
+
+            <button class="logout-btn" id="logoutBtn">
+                <span>ВЫЙТИ</span>
+                <span class="btn-icon">⤷</span>
+            </button>
+        </div>
+    </div>
+
+    <main class="main-content" id="mainContent"></main>
+
+    <script src="app.js"></script>
+</body>
+</html>

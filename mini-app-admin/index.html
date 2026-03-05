@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLDRS SHOP - АДМИН ПАНЕЛЬ</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <!-- ВЕРХНЯЯ ПЛАШКА -->
+    <header class="admin-header">
+        <div class="header-left">
+            <div class="shop-logo">
+                <span class="logo-text">OLDRS</span>
+                <span class="logo-sub">ADMIN</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="admin-info" id="adminInfo">
+                <span class="admin-name">ADMIN</span>
+            </div>
+            <button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
+        </div>
+    </header>
+
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+    <div class="admin-container">
+        <!-- БОКОВОЕ МЕНЮ -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-section="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span>ДАШБОРД</span>
+                </button>
+                <button class="nav-btn" data-section="categories">
+                    <span class="nav-icon">📁</span>
+                    <span>КАТЕГОРИИ</span>
+                </button>
+                <button class="nav-btn" data-section="orders">
+                    <span class="nav-icon">📋</span>
+                    <span>ЗАКАЗЫ</span>
+                </button>
+                <button class="nav-btn" data-section="users">
+                    <span class="nav-icon">👥</span>
+                    <span>ПОЛЬЗОВАТЕЛИ</span>
+                </button>
+                <button class="nav-btn" data-section="stats">
+                    <span class="nav-icon">📈</span>
+                    <span>СТАТИСТИКА</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- ОСНОВНОЙ КОНТЕНТ -->
+        <main class="main-content" id="mainContent">
+            <!-- СЕКЦИЯ ДАШБОРД -->
+            <section id="dashboard-section" class="content-section active">
+                <h2>📊 ДАШБОРД</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statProducts">0</div>
+                        <div class="stat-label">ТОВАРОВ</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statCategories">0</div>
+                        <div class="stat-label">КАТЕГОРИЙ</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statUsers">0</div>
+                        <div class="stat-label">ПОЛЬЗОВАТЕЛЕЙ</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statOrders">0</div>
+                        <div class="stat-label">ЗАКАЗОВ</div>
+                    </div>
+                </div>
+
+                <h3>🔥 ТОП ДОНАТЕРОВ</h3>
+                <div class="top-donaters" id="topDonaters">
+                    <div class="loading">ЗАГРУЗКА...</div>
+                </div>
+            </section>
+
+            <!-- СЕКЦИЯ КАТЕГОРИИ -->
+            <section id="categories-section" class="content-section">
+                <div class="section-header">
+                    <h2>📁 УПРАВЛЕНИЕ КАТЕГОРИЯМИ</h2>
+                    <button class="action-btn primary" id="addCategoryBtn">+ ДОБАВИТЬ КАТЕГОРИЮ</button>
+                </div>
+
+                <!-- ФОРМА ДОБАВЛЕНИЯ КАТЕГОРИИ -->
+                <div class="category-form" id="categoryForm" style="display: none;">
+                    <input type="text" id="categoryName" placeholder="НАЗВАНИЕ КАТЕГОРИИ">
+                    <button class="action-btn primary" id="saveCategoryBtn">СОХРАНИТЬ</button>
+                    <button class="action-btn secondary" id="cancelCategoryBtn">ОТМЕНА</button>
+                </div>
+
+                <!-- СПИСОК КАТЕГОРИЙ -->
+                <div class="categories-grid" id="categoriesList"></div>
+            </section>
+
+            <!-- СЕКЦИЯ ТОВАРЫ КАТЕГОРИИ -->
+            <section id="category-products-section" class="content-section">
+                <div class="section-header">
+                    <div class="header-with-back">
+                        <button class="back-btn" id="backToCategories">← НАЗАД К КАТЕГОРИЯМ</button>
+                        <h2 id="currentCategoryTitle">ТОВАРЫ КАТЕГОРИИ</h2>
+                    </div>
+                    <button class="action-btn primary" id="addProductInCategoryBtn">+ ДОБАВИТЬ ТОВАР</button>
+                </div>
+
+                <!-- ФОРМА ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ ТОВАРА -->
+                <div class="product-form" id="productForm" style="display: none;">
+                    <h3 id="formTitle">ДОБАВЛЕНИЕ ТОВАРА</h3>
+                    
+                    <div class="form-group">
+                        <label>НАЗВАНИЕ ТОВАРА</label>
+                        <input type="text" id="productName" placeholder="НАПРИМЕР: AK-47">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>ЦЕНА (₽)</label>
+                        <input type="number" id="productPrice" placeholder="500">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>КАТЕГОРИЯ</label>
+                        <input type="text" id="productCategory" readonly class="readonly-field">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>ОПИСАНИЕ</label>
+                        <textarea id="productDescription" rows="3" placeholder="ОПИСАНИЕ ТОВАРА"></textarea>
+                    </div>
+                    
+                    <!-- ИЗОБРАЖЕНИЕ ТОВАРА -->
+                    <div class="form-group">
+                        <label>ИЗОБРАЖЕНИЕ ТОВАРА</label>
+                        <div class="image-upload-container">
+                            <!-- Превью изображения -->
+                            <div class="image-preview" id="imagePreview">
+                                <img src="" alt="Preview" id="previewImg" style="display: none;">
+                                <div class="preview-placeholder" id="previewPlaceholder">
+                                    <span class="preview-icon">🖼️</span>
+                                    <span>ПРЕВЬЮ</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Вкладки выбора -->
+                            <div class="upload-tabs">
+                                <button class="upload-tab active" id="fileTab" type="button">📁 ЗАГРУЗИТЬ ФАЙЛ</button>
+                                <button class="upload-tab" id="urlTab" type="button">🔗 ВСТАВИТЬ ССЫЛКУ</button>
+                            </div>
+                            
+                            <!-- Загрузка файла -->
+                            <div class="upload-panel active" id="filePanel">
+                                <div class="file-upload-area">
+                                    <input type="file" id="productImageFile" accept="image/*" style="display: none;">
+                                    <button class="upload-btn" id="selectFileBtn" type="button">
+                                        <span class="btn-icon">📂</span>
+                                        ВЫБРАТЬ ФАЙЛ
+                                    </button>
+                                    <span class="file-name" id="fileName">Файл не выбран</span>
+                                </div>
+                                <p class="upload-hint">Максимальный размер: 5 МБ. Поддерживаются: JPG, PNG, GIF</p>
+                            </div>
+                            
+                            <!-- URL ссылка -->
+                            <div class="upload-panel" id="urlPanel">
+                                <input type="url" id="productImageUrl" placeholder="https://example.com/image.jpg">
+                                <p class="upload-hint">Вставьте прямую ссылку на изображение</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="action-btn primary" id="saveProductBtn">💾 СОХРАНИТЬ</button>
+                        <button class="action-btn secondary" id="cancelProductBtn">ОТМЕНА</button>
+                    </div>
+                </div>
+
+                <!-- СПИСОК ТОВАРОВ КАТЕГОРИИ -->
+                <div class="products-grid" id="categoryProductsList">
+                    <div class="loading">ЗАГРУЗКА...</div>
+                </div>
+            </section>
+
+            <!-- СЕКЦИЯ ЗАКАЗЫ -->
+            <section id="orders-section" class="content-section">
+                <h2>📋 УПРАВЛЕНИЕ ЗАКАЗАМИ</h2>
+                
+                <div class="orders-tabs">
+                    <button class="order-tab active" data-status="all">ВСЕ</button>
+                    <button class="order-tab" data-status="pending">⏳ ОЖИДАНИЕ</button>
+                    <button class="order-tab" data-status="processing">🔄 В ОБРАБОТКЕ</button>
+                    <button class="order-tab" data-status="completed">✅ ВЫПОЛНЕННЫЕ</button>
+                    <button class="order-tab" data-status="cancelled">❌ ОТМЕНЁННЫЕ</button>
+                </div>
+
+                <div class="orders-list" id="ordersList">
+                    <div class="loading">ЗАГРУЗКА...</div>
+                </div>
+            </section>
+
+            <!-- СЕКЦИЯ ПОЛЬЗОВАТЕЛИ -->
+            <section id="users-section" class="content-section">
+                <h2>👥 ПОЛЬЗОВАТЕЛИ</h2>
+                
+                <div class="users-grid" id="usersList">
+                    <div class="loading">ЗАГРУЗКА...</div>
+                </div>
+            </section>
+
+            <!-- СЕКЦИЯ СТАТИСТИКА -->
+            <section id="stats-section" class="content-section">
+                <h2>📈 ДЕТАЛЬНАЯ СТАТИСТИКА</h2>
+                
+                <div class="stats-detailed">
+                    <div class="stat-block">
+                        <h3>ПРОДАЖИ ПО КАТЕГОРИЯМ</h3>
+                        <div id="categorySales" class="chart-placeholder">
+                            <p>СТАТИСТИКА В РАЗРАБОТКЕ</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-block">
+                        <h3>ПОПУЛЯРНЫЕ ТОВАРЫ</h3>
+                        <div id="popularProducts" class="popular-list">
+                            <p>СТАТИСТИКА В РАЗРАБОТКЕ</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- МОДАЛКА ПОДТВЕРЖДЕНИЯ -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <h3>ПОДТВЕРЖДЕНИЕ УДАЛЕНИЯ</h3>
+            <p>ВЫ УВЕРЕНЫ, ЧТО ХОТИТЕ УДАЛИТЬ ЭТОТ ЭЛЕМЕНТ?</p>
+            <div class="modal-actions">
+                <button class="action-btn danger" id="confirmDelete">УДАЛИТЬ</button>
+                <button class="action-btn secondary" id="cancelDelete">ОТМЕНА</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА ДЕТАЛЕЙ ПОЛЬЗОВАТЕЛЯ -->
+    <div class="user-modal" id="userModal">
+        <div class="user-modal-content">
+            <div class="user-modal-header">
+                <h2>ДЕТАЛИ ПОЛЬЗОВАТЕЛЯ</h2>
+                <button class="close-user-modal" id="closeUserModal">✕</button>
+            </div>
+            <div class="user-modal-body" id="userModalBody">
+                <!-- Данные пользователя будут загружаться сюда -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
